@@ -6,6 +6,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -84,6 +85,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             // tmpArrayをquizArrayに追加する
             quizArray.add(tmpArray);
         }
+
+        /*
+        //SQLデータベースの初期化
+        dbhelper=new QuizDataBaseHelper(this);
+
+        //データベースに問題データを挿入
+        SQLiteDatabase db=dbhelper.getWritableDatabase();
+        insertQuizData(db);
+        */
 
         showNextQuiz();
     }
