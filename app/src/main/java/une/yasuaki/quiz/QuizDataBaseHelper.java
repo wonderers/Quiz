@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
+/*
 public class QuizDataBaseHelper extends SQLiteOpenHelper {
 
     static final private String DBNAME1 ="quiz1.sqlite";
@@ -44,3 +44,5 @@ public class QuizDataBaseHelper extends SQLiteOpenHelper {
         super.onOpen(db);
     }
 }
+
+ */
