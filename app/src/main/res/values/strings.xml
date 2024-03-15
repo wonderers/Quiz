@@ -1,6 +1,13 @@
 <resources>
     <string name="app_name">Quiz</string>
-    <string name="count_label">何問目</string>
+    <!-- クイズ画面 -->
     <string name="question_label">問題文</string>
+    <string name="count_label">%d問目</string>
     <string name="answer_label">選択肢</string>
+
+    <!-- 結果画面 -->
+    <string name="result_title">結果</string>
+    <string name="result_score">%d問正解 / 10問中</string>
+    <string name="result_total_score">トータルスコア : %d</string>
+    <string name="btn_return">もどる</string>
 </resources>
