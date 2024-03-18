@@ -2,16 +2,19 @@ package une.yasuaki.quiz;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
+import android.view.View;
+import android.widget.Spinner;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.ArrayList;
+
+//import android.annotation.SuppressLint;
+//import android.widget.ArrayAdapter;
+//import android.widget.ListView;
+//import android.widget.TextView;
+//import android.widget.Toast;
+//import java.util.ArrayList;
 
 public class StartActivity extends AppCompatActivity{
     @Override
@@ -19,6 +22,24 @@ public class StartActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
+        //スタートボタンクリック時に呼び出されるイベントリスナー
+        Button btnStart=findViewById(R.id.btnStart);
+        btnStart.setOnClickListener(view -> {
+            //スピナーから選択したクイズカテゴリーを渡すために値を入れる
+            Spinner spinner = findViewById(R.id.quizCate);
+            Spinner spinner2=findViewById(R.id.quizLimit);
+
+            int quizCategory = spinner.getSelectedItemPosition();
+            int quizLimit=Integer.parseInt(spinner2.getSelectedItem().toString());
+
+            // MainActivityへのインテントを作成
+            Intent i=new Intent(StartActivity.this,MainActivity.class);
+            i.putExtra("QUIZ_CATEGORY", quizCategory);
+            i.putExtra("QUIZ_LIMIT",quizLimit);
+            startActivity(i);
+        });
+
+        /*
         //リスト項目をArray Listとして準備
         final ArrayList<String> data=new ArrayList<>();
         data.add("問題ジャンル1");
@@ -33,13 +54,6 @@ public class StartActivity extends AppCompatActivity{
         list.setOnItemClickListener((adapterView, view, i, l) -> {
             Toast.makeText(StartActivity.this, String.format("選択したのは%sです",((TextView)view).getText()), Toast.LENGTH_LONG).show();
         });
-
-        //スタートボタンクリック時に呼び出されるイベントリスナー
-        Button btnStart=findViewById(R.id.btnStart);
-        btnStart.setOnClickListener(view -> {
-            // MainActivityへのインテントを作成
-            Intent i=new Intent(StartActivity.this,MainActivity.class);
-            startActivity(i);
-        });
+         */
     }
 }

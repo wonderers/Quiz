@@ -14,11 +14,13 @@ public class ResultActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
 
-        TextView resultLabel = findViewById(R.id.resultLabel);
-        TextView totalScoreLabel = findViewById(R.id.totalScoreLabel);
+        TextView resultScoreLabel = findViewById(R.id.resultScoreLabel);
+        TextView resultCountLabel = findViewById(R.id.resultCountLabel);
+        TextView totalLabel = findViewById(R.id.totalScoreLabel);
 
         // 正解数をインテントから取得
         int score = getIntent().getIntExtra("RIGHT_ANSWER_COUNT", 0);
+        int quizcount = getIntent().getIntExtra("QUIZ_COUNT", 5);
 
         // (SharedPreferencesは端末保存、MODE_PRIVATEは自アプリからのみ変更可)Android端末のトータルスコアの読み出し
         SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
@@ -28,8 +30,9 @@ public class ResultActivity extends AppCompatActivity {
         totalScore += score;
 
         // TextViewに表示する
-        resultLabel.setText(getString(R.string.result_score, score));
-        totalScoreLabel.setText(getString(R.string.result_total_score, totalScore));
+        resultScoreLabel.setText(getString(R.string.result_score, score));
+        resultCountLabel.setText(getString(R.string.result_count, quizcount));
+        totalLabel.setText(getString(R.string.result_total_score, totalScore));
 
         // トータルスコアを保存
         SharedPreferences.Editor editor = prefs.edit();

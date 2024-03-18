@@ -4,17 +4,54 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context=".StartActivity"
+    android:gravity="center"
     android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/start_title"
+        android:textSize="26dp"/>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/start_msg"
+        android:layout_marginTop="10dp"/>
+
+    <Spinner
+        android:id="@+id/quizCate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:entries="@array/quiz_category"
+        android:layout_marginTop="10dp"
+        android:minHeight="48dp"
+        android:spinnerMode="dropdown" />
+
+    <Spinner
+        android:id="@+id/quizLimit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:entries="@array/quiz_count"
+        android:layout_marginTop="10dp"
+        android:minHeight="48dp"
+        android:spinnerMode="dropdown" />
 
     <Button
         android:id="@+id/btnStart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Start" />
+        android:text="@string/btn_start"
+        android:layout_marginTop="10dp"/>
 
+<!--
     <ListView
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:choiceMode="singleChoice" />
+-->
 </LinearLayout>

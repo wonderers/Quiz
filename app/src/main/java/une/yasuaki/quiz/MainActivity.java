@@ -1,13 +1,14 @@
 package une.yasuaki.quiz;
 
 import androidx.appcompat.app.AppCompatActivity;
-
+import androidx.fragment.app.DialogFragment;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.Cursor;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -33,11 +34,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //クイズ問題数カウント宣言
     private int quizCount=1;
 
-    //
-    static final private int QUIZ_COUNT = 10;
+    //クイズ問題数を選択ではなく定数にする場合
+    //static final private int QUIZ_COUNT = 10;
+
+    //クイズ問題数を選択にした場合の処理
+    int QUIZ_COUNT;
+
 
     ArrayList<ArrayList<String>> quizArray = new ArrayList<>();
-
+/*
     String[][] quizData = {
             // {"都道府県名", "正解", "選択肢１", "選択肢２", "選択肢３"}
             {"北海道", "札幌市", "長崎市", "福島市", "前橋市"},
@@ -51,11 +56,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             {"栃木県", "宇都宮市", "札幌市", "岡山市", "奈良市"},
             {"群馬県", "前橋市", "福岡市", "松江市", "福井市"},
     };
-
+*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        QUIZ_COUNT=getIntent().getIntExtra("QUIZ_LIMIT",5);
 
         countLabel = findViewById(R.id.countLabel);
         questionLabel = findViewById(R.id.questionLabel);
@@ -68,6 +75,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btna2.setOnClickListener(this);
         btna3.setOnClickListener(this);
         btna4.setOnClickListener(this);
+
+        // StartActivityからクイズカテゴリを取得
+        int quizCategory = getIntent().getIntExtra("QUIZ_CATEGORY", 0);
+        Log.v("QUIZ_CATEGORY", quizCategory + "");
 
         // quizDataからクイズ出題用のquizArrayを作成する
         for (String[] quizDatum : quizData) {
@@ -85,15 +96,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             // tmpArrayをquizArrayに追加する
             quizArray.add(tmpArray);
         }
-
-        /*
-        //SQLデータベースの初期化
-        dbhelper=new QuizDataBaseHelper(this);
-
-        //データベースに問題データを挿入
-        SQLiteDatabase db=dbhelper.getWritableDatabase();
-        insertQuizData(db);
-        */
 
         showNextQuiz();
     }
@@ -145,6 +147,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             alertTitle = "不正解...";
         }
 
+        //ダイアログオブジェクトの作成
+        DialogFragment dialogFragment = new AnswerDialogFragment();
+
+        //ダイアログに「正解・解説文」を渡す
+        Bundle args= new Bundle();
+        args.putString("alertTitle",alertTitle);
+        args.putString("rightAnswer",rightAnswer);
+        dialogFragment.setArguments(args);
+
+        //ダイアログが閉じないようにする
+        dialogFragment.setCancelable(false);
+
+        //ダイアログの表示
+        dialogFragment.show(getSupportFragmentManager(),"answer_dialog");
+    }
+
+    //「OK」ボタンを押した時に呼ばれるメソッド
+    public void okBtnClicked(){
+        if (quizCount == QUIZ_COUNT) {
+            // 結果画面へ移動
+            Intent intent = new Intent(MainActivity.this, ResultActivity.class);
+            intent.putExtra("RIGHT_ANSWER_COUNT", rightAnswerCount);
+            intent.putExtra("QUIZ_COUNT",QUIZ_COUNT);
+            startActivity(intent);
+        } else {
+            quizCount++;
+            showNextQuiz();
+        }
+    }
+
+        /*
         // ダイアログを作成
         new MaterialAlertDialogBuilder(this)
                 .setTitle(alertTitle)
@@ -156,6 +189,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             // 結果画面へ移動
                             Intent intent = new Intent(MainActivity.this, ResultActivity.class);
                             intent.putExtra("RIGHT_ANSWER_COUNT", rightAnswerCount);
+                            intent.putExtra("QUIZ_COUNT",QUIZ_COUNT);
                             startActivity(intent);
                         } else {
                             quizCount++;
@@ -165,5 +199,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 })
                 .setCancelable(false)
                 .show();
-    }
+
+         */
 }
