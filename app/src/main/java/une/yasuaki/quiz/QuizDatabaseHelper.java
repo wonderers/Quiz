@@ -1,13 +1,12 @@
 package une.yasuaki.quiz;
 
 import android.content.Context;
-
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
 
-public class QuizDataBaseHelper extends SQLiteOpenHelper {
+public class QuizDatabaseHelper extends SQLiteOpenHelper {
 
     static final private String DBNAME = "quiz.sqlite";
 
@@ -64,7 +63,7 @@ public class QuizDataBaseHelper extends SQLiteOpenHelper {
             {"47","沖縄県", "那覇市", "熊本市", "高知市", "大津市", "6"}
     };
 
-    QuizDataBaseHelper(Context context){
+    QuizDatabaseHelper(Context context){
         super(context,DBNAME,null,VERSION);
     }
 
@@ -85,16 +84,16 @@ public class QuizDataBaseHelper extends SQLiteOpenHelper {
             );
 
             // クイズデータを１行ずつ追加する
-            for (int i = 0; i < quizData.length; i++) {
+            for (String[] quizDatum : quizData) {
                 // Valueをセット
                 // bindString(index, value)
-                sql.bindString(1, quizData[i][0]); // ID
-                sql.bindString(2, quizData[i][1]); // 都道府県名
-                sql.bindString(3, quizData[i][2]); // 正解
-                sql.bindString(4, quizData[i][3]); // 選択肢１
-                sql.bindString(5, quizData[i][4]); // 選択肢２
-                sql.bindString(6, quizData[i][5]); // 選択肢３
-                sql.bindString(7, quizData[i][6]); // カテゴリ
+                sql.bindString(1, quizDatum[0]); // ID
+                sql.bindString(2, quizDatum[1]); // 都道府県名
+                sql.bindString(3, quizDatum[2]); // 正解
+                sql.bindString(4, quizDatum[3]); // 選択肢１
+                sql.bindString(5, quizDatum[4]); // 選択肢２
+                sql.bindString(6, quizDatum[5]); // 選択肢３
+                sql.bindString(7, quizDatum[6]); // カテゴリ
 
                 sql.executeInsert();
             }

@@ -1,21 +1,19 @@
 package une.yasuaki.quiz;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import android.content.DialogInterface;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.Cursor;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -78,8 +76,48 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // StartActivityからクイズカテゴリを取得
         int quizCategory = getIntent().getIntExtra("QUIZ_CATEGORY", 0);
-        Log.v("QUIZ_CATEGORY", quizCategory + "");
+        //Log.v("QUIZ_CATEGORY", quizCategory + "");
 
+        QuizDatabaseHelper dbHelper = new QuizDatabaseHelper(this);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        String table = "quiz";
+        String[] column = {"*"}; // 全てのカラム
+        String selection = "category = ?"; // どのカテゴリのクイズを取得するか
+        String[] selectionArgs = {String.valueOf(quizCategory)}; // カテゴリをセット
+        String orderBy = "RANDOM()"; // ランダムに取得
+        String limit = String.valueOf(QUIZ_COUNT); // 何問取得するか
+
+        Cursor cursor = null;
+
+        try {
+            if (quizCategory != 0) {
+                // カテゴリが「全て」以外の場合
+                cursor = db.query(table, column, selection, selectionArgs,
+                        null, null, orderBy, limit);
+            } else {
+                // カテゴリが「全て」の場合
+                cursor = db.query(table, column, null, null, null, null, orderBy, limit);
+            }
+
+            // quizArrayを作成
+            while (cursor.moveToNext()) {
+                ArrayList<String> tmpArray = new ArrayList<>();
+                tmpArray.add(cursor.getString(1)); // 都道府県名
+                tmpArray.add(cursor.getString(2)); // 正解
+                tmpArray.add(cursor.getString(3)); // 選択肢１
+                tmpArray.add(cursor.getString(4)); // 選択肢２
+                tmpArray.add(cursor.getString(5)); // 選択肢３
+                quizArray.add(tmpArray);
+            }
+        } finally {
+            // Cursor とデータベースを閉じる
+            if (cursor != null) cursor.close();
+            db.close();
+        }
+
+
+        /*
         // quizDataからクイズ出題用のquizArrayを作成する
         for (String[] quizDatum : quizData) {
 
@@ -96,6 +134,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             // tmpArrayをquizArrayに追加する
             quizArray.add(tmpArray);
         }
+
+         */
 
         showNextQuiz();
     }
