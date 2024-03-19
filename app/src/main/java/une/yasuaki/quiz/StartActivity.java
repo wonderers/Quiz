@@ -1,26 +1,25 @@
 package une.yasuaki.quiz;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.view.View;
 import android.widget.Spinner;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
-
-
-//import android.annotation.SuppressLint;
-//import android.widget.ArrayAdapter;
-//import android.widget.ListView;
-//import android.widget.TextView;
-//import android.widget.Toast;
-//import java.util.ArrayList;
 
 public class StartActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
+
+        getOnBackPressedDispatcher().addCallback(new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+            //戻るボタンで何もしてほしくないので中身は書かない
+            }
+        });
 
         //スタートボタンクリック時に呼び出されるイベントリスナー
         Button btnStart=findViewById(R.id.btnStart);
@@ -38,22 +37,5 @@ public class StartActivity extends AppCompatActivity{
             i.putExtra("QUIZ_LIMIT",quizLimit);
             startActivity(i);
         });
-
-        /*
-        //リスト項目をArray Listとして準備
-        final ArrayList<String> data=new ArrayList<>();
-        data.add("問題ジャンル1");
-        data.add("問題ジャンル2");
-
-        //配列アダプターを作成&ListViewに登録
-        ListView list= findViewById(R.id.list);
-        list.setAdapter(new ArrayAdapter<>(
-                this, android.R.layout.simple_list_item_single_choice,data
-        ));
-
-        list.setOnItemClickListener((adapterView, view, i, l) -> {
-            Toast.makeText(StartActivity.this, String.format("選択したのは%sです",((TextView)view).getText()), Toast.LENGTH_LONG).show();
-        });
-         */
     }
 }

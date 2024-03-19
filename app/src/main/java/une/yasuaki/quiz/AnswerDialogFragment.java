@@ -1,7 +1,6 @@
 package une.yasuaki.quiz;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -23,12 +22,7 @@ public class AnswerDialogFragment extends DialogFragment {
         return new MaterialAlertDialogBuilder(requireActivity())
                 .setTitle(alertTitle)
                 .setMessage("答え：" + rightAnswer)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        ((MainActivity) requireActivity()).okBtnClicked();
-                    }
-                })
+                .setPositiveButton("OK", (dialog, which) -> ((MainActivity) requireActivity()).okBtnClicked())
                 .create();
     }
 }

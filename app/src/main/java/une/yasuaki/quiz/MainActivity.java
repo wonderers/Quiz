@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
@@ -38,27 +39,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //クイズ問題数を選択にした場合の処理
     int QUIZ_COUNT;
 
-
     ArrayList<ArrayList<String>> quizArray = new ArrayList<>();
-/*
-    String[][] quizData = {
-            // {"都道府県名", "正解", "選択肢１", "選択肢２", "選択肢３"}
-            {"北海道", "札幌市", "長崎市", "福島市", "前橋市"},
-            {"青森県", "青森市", "広島市", "甲府市", "岡山市"},
-            {"岩手県", "盛岡市","大分市", "秋田市", "福岡市"},
-            {"宮城県", "仙台市", "水戸市", "岐阜市", "福井市"},
-            {"秋田県", "秋田市","横浜市", "鳥取市", "仙台市"},
-            {"山形県", "山形市","青森市", "山口市", "奈良市"},
-            {"福島県", "福島市", "盛岡市", "新宿区", "京都市"},
-            {"茨城県", "水戸市", "金沢市", "名古屋市", "奈良市"},
-            {"栃木県", "宇都宮市", "札幌市", "岡山市", "奈良市"},
-            {"群馬県", "前橋市", "福岡市", "松江市", "福井市"},
-    };
-*/
+    private SoundPlayer soundPlayer = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        getOnBackPressedDispatcher().addCallback(new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                //戻るボタンで何もしてほしくないので中身は書かない
+            }
+        });
+
+        soundPlayer = new SoundPlayer(this);
 
         QUIZ_COUNT=getIntent().getIntExtra("QUIZ_LIMIT",5);
 
@@ -163,8 +159,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (btnText.equals(rightAnswer)) {
             alertTitle = "正解!";
             rightAnswerCount++;
+            soundPlayer.playCorrectSound();
         } else {
             alertTitle = "不正解...";
+            soundPlayer.playWrongSound();
         }
 
         //ダイアログオブジェクトの作成
