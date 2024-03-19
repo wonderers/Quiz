@@ -115,4 +115,3 @@ public class QuizDatabaseHelper extends SQLiteOpenHelper {
 
     }
 }
-

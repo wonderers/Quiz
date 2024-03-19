@@ -117,26 +117,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
 
-        /*
-        // quizDataからクイズ出題用のquizArrayを作成する
-        for (String[] quizDatum : quizData) {
-
-            // 新しいArrayListを準備
-            ArrayList<String> tmpArray = new ArrayList<>();
-
-            // クイズデータを追加
-            tmpArray.add(quizDatum[0]);  // 都道府県名
-            tmpArray.add(quizDatum[1]);  // 正解
-            tmpArray.add(quizDatum[2]);  // 選択肢１
-            tmpArray.add(quizDatum[3]);  // 選択肢２
-            tmpArray.add(quizDatum[4]);  // 選択肢３
-
-            // tmpArrayをquizArrayに追加する
-            quizArray.add(tmpArray);
-        }
-
-         */
-
         showNextQuiz();
     }
 
@@ -216,29 +196,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             showNextQuiz();
         }
     }
-
-        /*
-        // ダイアログを作成
-        new MaterialAlertDialogBuilder(this)
-                .setTitle(alertTitle)
-                .setMessage("答え : " + rightAnswer)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        if (quizCount == QUIZ_COUNT) {
-                            // 結果画面へ移動
-                            Intent intent = new Intent(MainActivity.this, ResultActivity.class);
-                            intent.putExtra("RIGHT_ANSWER_COUNT", rightAnswerCount);
-                            intent.putExtra("QUIZ_COUNT",QUIZ_COUNT);
-                            startActivity(intent);
-                        } else {
-                            quizCount++;
-                            showNextQuiz();
-                        }
-                    }
-                })
-                .setCancelable(false)
-                .show();
-
-         */
 }
