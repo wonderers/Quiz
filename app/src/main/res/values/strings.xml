@@ -6,12 +6,19 @@
     <string name="btn_start">クイズを開始します</string>
     <string-array name="quiz_category">
         <item>全て</item>
+        <item>レトロゲーム</item>
+        <item>アニメ</item>
+        <item>漫画</item>
+        <item>流行</item>
+        <!--
+        <item>全て</item>
         <item>北海道・東北</item>
         <item>関東</item>
         <item>中部</item>
         <item>近畿</item>
         <item>中国・四国</item>
         <item>九州</item>
+        -->
     </string-array>
 
     <string-array name="quiz_count">

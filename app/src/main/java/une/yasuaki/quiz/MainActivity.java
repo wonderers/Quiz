@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
@@ -15,11 +16,17 @@ import androidx.fragment.app.DialogFragment;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
+import une.yasuaki.quiz.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
+    private ActivityMainBinding binding;
+
     //テキストビュー宣言
     private TextView countLabel,questionLabel;
+
+    //イメージビュー宣言
+    private ImageView questionImage;
 
     //ボタン宣言
     private Button btna1,btna2,btna3,btna4;
@@ -45,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(R.layout.activity_main);
 
         getOnBackPressedDispatcher().addCallback(new OnBackPressedCallback(true) {
@@ -64,6 +72,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btna2 = findViewById(R.id.btna2);
         btna3 = findViewById(R.id.btna3);
         btna4 = findViewById(R.id.btna4);
+
+        questionImage=findViewById(R.id.questionImage);
 
         btna1.setOnClickListener(this);
         btna2.setOnClickListener(this);
@@ -99,11 +109,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             // quizArrayを作成
             while (cursor.moveToNext()) {
                 ArrayList<String> tmpArray = new ArrayList<>();
-                tmpArray.add(cursor.getString(1)); // 都道府県名
+                tmpArray.add(cursor.getString(1)); // 問題
                 tmpArray.add(cursor.getString(2)); // 正解
                 tmpArray.add(cursor.getString(3)); // 選択肢１
                 tmpArray.add(cursor.getString(4)); // 選択肢２
                 tmpArray.add(cursor.getString(5)); // 選択肢３
+                tmpArray.add(cursor.getString(7)); // 問題画像
                 quizArray.add(tmpArray);
             }
         } finally {
@@ -127,13 +138,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // randomNumを使って、quizArrayからクイズを一つ取り出す
         ArrayList<String> quiz = quizArray.get(randomNum);
 
-        // 問題文（都道府県名）を表示
+        binding.questionImage.setImageResource(
+                getResources().getIdentifier(quiz.get(0), "drawable", getPackageName())
+        );
+
+        // 問題文を表示
         questionLabel.setText(quiz.get(0));
 
         // 正解をrightAnswerにセット
         rightAnswer = quiz.get(1);
 
-        // クイズ配列から問題文（都道府県名）を削除
+        // クイズ配列から問題文を削除
         quiz.remove(0);
 
         // 正解と選択肢３つをシャッフル
