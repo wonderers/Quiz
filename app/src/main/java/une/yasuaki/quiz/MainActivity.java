@@ -20,13 +20,14 @@ import une.yasuaki.quiz.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private ActivityMainBinding binding;
+    //画像表示用binding宣言
+    //private ActivityMainBinding binding;
 
     //テキストビュー宣言
     private TextView countLabel,questionLabel;
 
     //イメージビュー宣言
-    private ImageView questionImage;
+    //private ImageView questionImage;
 
     //ボタン宣言
     private Button btna1,btna2,btna3,btna4;
@@ -52,15 +53,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        //binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(R.layout.activity_main);
 
+        /*
         getOnBackPressedDispatcher().addCallback(new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
                 //戻るボタンで何もしてほしくないので中身は書かない
             }
         });
+
+         */
 
         soundPlayer = new SoundPlayer(this);
 
@@ -73,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btna3 = findViewById(R.id.btna3);
         btna4 = findViewById(R.id.btna4);
 
-        questionImage=findViewById(R.id.questionImage);
+        //questionImage=findViewById(R.id.questionImage);
 
         btna1.setOnClickListener(this);
         btna2.setOnClickListener(this);
@@ -114,7 +118,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 tmpArray.add(cursor.getString(3)); // 選択肢１
                 tmpArray.add(cursor.getString(4)); // 選択肢２
                 tmpArray.add(cursor.getString(5)); // 選択肢３
-                tmpArray.add(cursor.getString(7)); // 問題画像
                 quizArray.add(tmpArray);
             }
         } finally {
@@ -138,9 +141,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // randomNumを使って、quizArrayからクイズを一つ取り出す
         ArrayList<String> quiz = quizArray.get(randomNum);
 
+        /*
         binding.questionImage.setImageResource(
                 getResources().getIdentifier(quiz.get(0), "drawable", getPackageName())
         );
+
+         */
 
         // 問題文を表示
         questionLabel.setText(quiz.get(0));
