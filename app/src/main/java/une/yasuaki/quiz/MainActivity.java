@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
@@ -16,18 +15,11 @@ import androidx.fragment.app.DialogFragment;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
-import une.yasuaki.quiz.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
-    //画像表示用binding宣言
-    //private ActivityMainBinding binding;
-
     //テキストビュー宣言
     private TextView countLabel,questionLabel;
-
-    //イメージビュー宣言
-    //private ImageView questionImage;
 
     //ボタン宣言
     private Button btna1,btna2,btna3,btna4;
@@ -53,18 +45,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(R.layout.activity_main);
 
-        /*
+        //アンドロイド端末の戻るボタン無効化処理
         getOnBackPressedDispatcher().addCallback(new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
                 //戻るボタンで何もしてほしくないので中身は書かない
             }
         });
-
-         */
 
         soundPlayer = new SoundPlayer(this);
 
@@ -77,8 +66,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btna3 = findViewById(R.id.btna3);
         btna4 = findViewById(R.id.btna4);
 
-        //questionImage=findViewById(R.id.questionImage);
-
         btna1.setOnClickListener(this);
         btna2.setOnClickListener(this);
         btna3.setOnClickListener(this);
@@ -86,7 +73,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // StartActivityからクイズカテゴリを取得
         int quizCategory = getIntent().getIntExtra("QUIZ_CATEGORY", 0);
-        //Log.v("QUIZ_CATEGORY", quizCategory + "");
 
         QuizDatabaseHelper dbHelper = new QuizDatabaseHelper(this);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -126,7 +112,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             db.close();
         }
 
-
         showNextQuiz();
     }
 
@@ -140,13 +125,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // randomNumを使って、quizArrayからクイズを一つ取り出す
         ArrayList<String> quiz = quizArray.get(randomNum);
-
-        /*
-        binding.questionImage.setImageResource(
-                getResources().getIdentifier(quiz.get(0), "drawable", getPackageName())
-        );
-
-         */
 
         // 問題文を表示
         questionLabel.setText(quiz.get(0));

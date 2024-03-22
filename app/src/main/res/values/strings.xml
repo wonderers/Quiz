@@ -10,15 +10,7 @@
         <item>アニメ</item>
         <item>漫画</item>
         <item>流行</item>
-        <!--
-        <item>全て</item>
-        <item>北海道・東北</item>
-        <item>関東</item>
-        <item>中部</item>
-        <item>近畿</item>
-        <item>中国・四国</item>
-        <item>九州</item>
-        -->
+
     </string-array>
 
     <string-array name="quiz_count">
@@ -36,5 +28,5 @@
     <string name="result_score">%d問正解</string>
     <string name="result_count">/ %d問中</string>
     <string name="result_total_score">トータルスコア : %d</string>
-    <string name="btn_return">もどる</string>
+    <string name="btn_return">スタート画面に戻る</string>
 </resources>

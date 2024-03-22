@@ -49,5 +49,6 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
         android:text="@string/btn_start"
-        android:textSize="34dp" />
+        android:textSize="34dp"
+        style="@style/Widget.Material3.Button.OutlinedButton"/>
 </LinearLayout>

@@ -14,12 +14,15 @@ public class StartActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
+        //スタート画面から戻るボタンで終了も考慮したいのでスタート画面での戻るボタン無効化は保留
+        /*
         getOnBackPressedDispatcher().addCallback(new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
             //戻るボタンで何もしてほしくないので中身は書かない
             }
         });
+         */
 
         //スタートボタンクリック時に呼び出されるイベントリスナー
         Button btnStart=findViewById(R.id.btnStart);

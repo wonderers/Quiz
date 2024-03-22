@@ -56,5 +56,6 @@
         android:layout_marginTop="5dp"
         android:layout_marginRight="10dp"
         android:text="@string/btn_return"
-        android:textSize="36sp" />
+        android:textSize="36sp"
+        style="@style/Widget.Material3.Button.OutlinedButton"/>
 </LinearLayout>
