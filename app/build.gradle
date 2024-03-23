@@ -6,6 +6,10 @@ android {
     namespace 'une.yasuaki.quiz'
     compileSdk 34
 
+    buildFeatures {
+        viewBinding = true
+    }
+
     defaultConfig {
         applicationId "une.yasuaki.quiz"
         minSdk 25

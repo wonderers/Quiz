@@ -13,10 +13,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
+import une.yasuaki.quiz.databinding.ActivityMainBinding;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+
+    private ActivityMainBinding binding;
 
     //テキストビュー宣言
     private TextView countLabel,questionLabel;
@@ -28,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String rightAnswer;
 
     //正解数をカウントするための宣言
-    private int rightAnswerCount;
+    private int rightAnswerCount=0;
 
     //クイズ問題数カウント宣言
     private int quizCount=1;
@@ -42,10 +48,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ArrayList<ArrayList<String>> quizArray = new ArrayList<>();
     private SoundPlayer soundPlayer = null;
 
+    //選択肢シャッフルの為の準備
+    private String select1,select2,select3,select4;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        //setContentView(R.layout.activity_main);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         //アンドロイド端末の戻るボタン無効化処理
         getOnBackPressedDispatcher().addCallback(new OnBackPressedCallback(true) {
@@ -59,17 +70,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         QUIZ_COUNT=getIntent().getIntExtra("QUIZ_LIMIT",5);
 
-        countLabel = findViewById(R.id.countLabel);
-        questionLabel = findViewById(R.id.questionLabel);
-        btna1 = findViewById(R.id.btna1);
-        btna2 = findViewById(R.id.btna2);
-        btna3 = findViewById(R.id.btna3);
-        btna4 = findViewById(R.id.btna4);
+        binding.countLabel.setText(getString(R.string.count_label, quizCount));
+        //questionLabel = findViewById(R.id.questionLabel);
 
-        btna1.setOnClickListener(this);
-        btna2.setOnClickListener(this);
-        btna3.setOnClickListener(this);
-        btna4.setOnClickListener(this);
+        binding.btna1.setOnClickListener(this);
+        binding.btna2.setOnClickListener(this);
+        binding.btna3.setOnClickListener(this);
+        binding.btna4.setOnClickListener(this);
 
         // StartActivityからクイズカテゴリを取得
         int quizCategory = getIntent().getIntExtra("QUIZ_CATEGORY", 0);
@@ -99,11 +106,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             // quizArrayを作成
             while (cursor.moveToNext()) {
                 ArrayList<String> tmpArray = new ArrayList<>();
-                tmpArray.add(cursor.getString(1)); // 問題
-                tmpArray.add(cursor.getString(2)); // 正解
-                tmpArray.add(cursor.getString(3)); // 選択肢１
-                tmpArray.add(cursor.getString(4)); // 選択肢２
-                tmpArray.add(cursor.getString(5)); // 選択肢３
+                tmpArray.add(cursor.getString(0)); // ID
+                tmpArray.add(cursor.getString(1)); // カテゴリーID
+                tmpArray.add(cursor.getString(2)); // 画像
+                tmpArray.add(cursor.getString(3)); // 問題
+                tmpArray.add(cursor.getString(4)); // 正解
+                tmpArray.add(cursor.getString(5)); // 選択肢１
+                tmpArray.add(cursor.getString(6)); // 選択肢２
+                tmpArray.add(cursor.getString(7)); // 選択肢３
                 quizArray.add(tmpArray);
             }
         } finally {
@@ -117,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void showNextQuiz() {
         // クイズカウントラベルを更新
-        countLabel.setText(getString(R.string.count_label, quizCount));
+        //countLabel.setText(getString(R.string.count_label, quizCount));
 
         // ランダムな数字を取得
         Random random = new Random();
@@ -126,23 +136,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // randomNumを使って、quizArrayからクイズを一つ取り出す
         ArrayList<String> quiz = quizArray.get(randomNum);
 
+        // 問題画像をセット
+        binding.questionImage.setImageResource(
+                getResources().getIdentifier(quiz.get(2), "drawable", getPackageName())
+        );
+
         // 問題文を表示
-        questionLabel.setText(quiz.get(0));
+        binding.questionLabel.setText(quiz.get(3));
 
         // 正解をrightAnswerにセット
-        rightAnswer = quiz.get(1);
+        rightAnswer = quiz.get(4);
 
-        // クイズ配列から問題文を削除
-        quiz.remove(0);
+        //正解と選択肢を一旦セット
+        select1=quiz.get(4);
+        select2=quiz.get(5);
+        select3=quiz.get(6);
+        select4=quiz.get(7);
+
+        //シャッフル用に配列に入れる
+        List<String> select = new ArrayList<>(Arrays.asList(select1, select2, select3, select4));
 
         // 正解と選択肢３つをシャッフル
-        Collections.shuffle(quiz);
+        Collections.shuffle(select);
 
         // 解答ボタンに正解と選択肢３つを表示
-        btna1.setText(quiz.get(0));
-        btna2.setText(quiz.get(1));
-        btna3.setText(quiz.get(2));
-        btna4.setText(quiz.get(3));
+        binding.btna1.setText(select.get(0));
+        binding.btna2.setText(select.get(1));
+        binding.btna3.setText(select.get(2));
+        binding.btna4.setText(select.get(3));
 
         // このクイズをquizArrayから削除
         quizArray.remove(randomNum);
