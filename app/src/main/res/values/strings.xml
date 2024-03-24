@@ -4,6 +4,7 @@
     <string name="start_title">4択クイズ</string>
     <string name="start_msg">クイズのカテゴリと問題数を選択してください</string>
     <string name="btn_start">クイズを開始します</string>
+    <string name="btn_onClose">アプリを終了します</string>
     <string-array name="quiz_category">
         <item>全て</item>
         <item>レトロゲーム</item>
@@ -25,8 +26,9 @@
 
     <!-- 結果画面 -->
     <string name="result_title">結果</string>
+    <string name="result_rate">正解率 : %d %%</string>
     <string name="result_score">%d問正解</string>
     <string name="result_count">/ %d問中</string>
-    <string name="result_total_score">トータルスコア : %d</string>
+    <string name="result_total_score">最高正解率 : %d %%</string>
     <string name="btn_return">スタート画面に戻る</string>
 </resources>

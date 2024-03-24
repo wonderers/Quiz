@@ -1,12 +1,13 @@
 package une.yasuaki.quiz;
 
-import androidx.activity.OnBackPressedCallback;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.widget.Spinner;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.Spinner;
+
+import androidx.activity.OnBackPressedCallback;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class StartActivity extends AppCompatActivity{
     @Override
@@ -15,14 +16,12 @@ public class StartActivity extends AppCompatActivity{
         setContentView(R.layout.activity_start);
 
         //スタート画面から戻るボタンで終了も考慮したいのでスタート画面での戻るボタン無効化は保留
-        /*
         getOnBackPressedDispatcher().addCallback(new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-            //戻るボタンで何もしてほしくないので中身は書かない
+                moveTaskToBack(true);
             }
         });
-         */
 
         //スタートボタンクリック時に呼び出されるイベントリスナー
         Button btnStart=findViewById(R.id.btnStart);
@@ -40,5 +39,10 @@ public class StartActivity extends AppCompatActivity{
             i.putExtra("QUIZ_LIMIT",quizLimit);
             startActivity(i);
         });
+    }
+
+    // アプリの終了クリック処理
+    public void onClose( View v){
+        moveTaskToBack(true);       // 画面を閉じる（アクティビティの終了）
     }
 }

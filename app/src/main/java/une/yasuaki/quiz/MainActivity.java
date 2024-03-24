@@ -128,6 +128,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void showNextQuiz() {
         // クイズカウントラベルを更新
         //countLabel.setText(getString(R.string.count_label, quizCount));
+        binding.countLabel.setText(getString(R.string.count_label, quizCount));
 
         // ランダムな数字を取得
         Random random = new Random();

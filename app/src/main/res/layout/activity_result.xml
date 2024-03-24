@@ -16,6 +16,23 @@
         android:gravity="center"
         android:text="@string/result_title" />
 
+    <ImageView
+        android:id="@+id/resultImage"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/inu_maru"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/resultRate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textSize="36sp"
+        android:gravity="center"
+        android:text="@string/result_rate" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -57,5 +74,17 @@
         android:layout_marginRight="10dp"
         android:text="@string/btn_return"
         android:textSize="36sp"
+        style="@style/Widget.Material3.Button.OutlinedButton"/>
+
+    <Button
+        android:id="@+id/onClose"
+        android:onClick="onClose"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:text="@string/btn_onClose"
+        android:textSize="36dp"
         style="@style/Widget.Material3.Button.OutlinedButton"/>
 </LinearLayout>
