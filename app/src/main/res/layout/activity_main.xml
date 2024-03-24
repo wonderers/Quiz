@@ -21,7 +21,7 @@
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_marginTop="10dp"
-        android:src="@drawable/image_circle"
+        android:src="@drawable/g1_1"
         tools:ignore="ContentDescription" />
 
     <TextView
