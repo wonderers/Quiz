@@ -14,13 +14,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class ResultActivity extends AppCompatActivity {
 
-    private SoundPlayer soundPlayer = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
 
-        soundPlayer = new SoundPlayer(this);
 
         //アンドロイド端末の戻るボタン無効化処理
         getOnBackPressedDispatcher().addCallback(new OnBackPressedCallback(true) {
@@ -54,12 +52,10 @@ public class ResultActivity extends AppCompatActivity {
             resultImage.setImageResource(
                     getResources().getIdentifier("inu_maru", "drawable", getPackageName())
             );
-            soundPlayer.playCorrectSound();
         }else{
             resultImage.setImageResource(
                     getResources().getIdentifier("inu_batsu", "drawable", getPackageName())
             );
-            soundPlayer.playWrongSound();
         }
 
         // TextViewに表示する
