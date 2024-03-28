@@ -62,7 +62,7 @@ public class ResultActivity extends AppCompatActivity {
         resultScoreLabel.setText(getString(R.string.result_score, score));
         resultCountLabel.setText(getString(R.string.result_count, quizcount));
 
-        // トータルスコアを保存
+        // 正解率を保存
         if(resultrate>=totalScore){
             totalScore=resultrate;
             SharedPreferences.Editor editor = prefs.edit();
